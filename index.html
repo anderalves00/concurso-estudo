@@ -11,7 +11,7 @@
     --azul:#2f6fb3; --azul-f:#e8f1fb; --laranja:#b4532a; --laranja-f:#fff4ec;
     --verde:#3c7a46; --verde-f:#eef6ee; --rosa:#a3324a; --rosa-f:#fdecef;
     --erro:#c0392b; --erro-f:#fdecea;
-    --parte:#f7f5f0; --painel:#fff; --sombra:0 1px 3px rgba(0,0,0,.06);
+    --parte:#e8e4dc; --painel:#fff; --sombra:0 1px 3px rgba(0,0,0,.06);
     --hl:rgba(255,200,40,.7); --hl-azul:rgba(47,111,179,.32); --hl-laranja:rgba(180,83,42,.3); --hl-rosa:rgba(163,50,74,.28);
     color-scheme:light;
   }
@@ -127,7 +127,8 @@
   .edital { color:var(--suave); margin:2px 0 0; padding:8px 12px; border:1px dashed var(--borda); border-radius:10px; font-size:.95rem; }
   .edital b { color:var(--texto); }
 
-  details.bloco-q > summary { font-size:.85rem; font-weight:700; margin:20px 0 10px; color:var(--suave); text-transform:uppercase; letter-spacing:.07em; cursor:pointer; }
+  details.bloco-q { background:var(--painel); border:1px solid var(--borda); border-radius:12px; padding:4px 14px 6px; margin-top:20px; box-shadow:var(--sombra); }
+  details.bloco-q > summary { font-size:.85rem; font-weight:700; margin:10px 0; color:var(--suave); text-transform:uppercase; letter-spacing:.07em; cursor:pointer; }
   @media (max-width: 560px) { .passos, .regra .dois { grid-template-columns:1fr; } }
 </style>
 </head>
@@ -199,8 +200,8 @@
                   <!-- ramos principais -->
                   <path d="M500,300 C430,300 420,110 400,110" stroke="#2f6fb3" stroke-width="5"/>
                   <path d="M500,300 C430,300 420,420 400,420" stroke="#b4532a" stroke-width="5"/>
-                  <path d="M500,300 C570,300 580,110 600,110" stroke="#3c7a46" stroke-width="5"/>
-                  <path d="M500,300 C570,300 580,420 600,420" stroke="#a3324a" stroke-width="5"/>
+                  <path d="M500,300 C560,300 560,110 580,110" stroke="#3c7a46" stroke-width="5"/>
+                  <path d="M500,300 C560,300 560,420 580,420" stroke="#a3324a" stroke-width="5"/>
                   <!-- folhas -->
                   <g stroke="#2f6fb3" stroke-width="2"><path d="M260,110 C250,110 255,72 245,72"/><path d="M260,110 C250,110 255,152 245,152"/></g>
                   <g stroke="#b4532a" stroke-width="2">
@@ -208,7 +209,7 @@
                     <path d="M260,420 C250,420 245,422 245,422"/><path d="M260,420 C250,420 255,482 245,482"/>
                     <path d="M260,420 C250,420 255,542 245,542"/></g>
                   <g stroke="#3c7a46" stroke-width="2"><path d="M740,110 C750,110 745,62 755,62"/><path d="M740,110 C750,110 745,152 755,152"/></g>
-                  <g stroke="#a3324a" stroke-width="2"><path d="M740,420 C750,420 745,306 755,306"/><path d="M740,420 C750,420 745,366 755,366"/><path d="M740,420 C750,420 745,442 755,442"/><path d="M740,420 C750,420 745,518 755,518"/></g>
+                  <g stroke="#a3324a" stroke-width="2"><path d="M740,420 C750,420 745,356 755,356"/><path d="M740,420 C750,420 745,432 755,432"/><path d="M740,420 C750,420 745,508 755,508"/></g>
                 </g>
                 <!-- centro -->
                 <rect x="420" y="268" width="160" height="64" rx="32" fill="#1f2a37"/>
@@ -218,8 +219,12 @@
                 <g font-size="16" font-weight="700" text-anchor="middle" fill="#fff">
                   <rect x="260" y="90" width="140" height="40" rx="20" fill="#2f6fb3"/><text x="330" y="116">Regra</text>
                   <rect x="260" y="400" width="140" height="40" rx="20" fill="#b4532a"/><text x="330" y="426">Exceção</text>
-                  <rect x="600" y="90" width="140" height="40" rx="20" fill="#3c7a46"/><text x="670" y="116">"sede" no RICD</text>
-                  <rect x="600" y="400" width="140" height="40" rx="20" fill="#a3324a"/><text x="670" y="426">ad referendum</text>
+                  <rect x="580" y="84" width="160" height="52" rx="26" fill="#3c7a46"/><text x="660" y="106">Sede</text>
+                  <rect x="580" y="394" width="160" height="52" rx="26" fill="#a3324a"/><text x="660" y="416">ad referendum</text>
+                </g>
+                <g font-size="13" text-anchor="middle" fill="#fff" opacity=".9">
+                  <text x="660" y="126">em outros artigos</text>
+                  <text x="660" y="436">vale já, confirma depois</text>
                 </g>
                 <!-- folhas: rótulo + valor -->
                 <g font-size="21" fill="#1f2a37" text-anchor="end">
@@ -234,10 +239,9 @@
                 <g font-size="21" fill="#1f2a37">
                   <text x="760" y="56"><tspan font-size="16" fill="#5b6472"><tspan class="cita" data-cita="4|caput">art. 4º, caput</tspan> · posse</tspan><tspan x="760" dy="24">sessão preparatória</tspan><tspan x="760" dy="24" font-weight="700" fill="#3c7a46">na sede da Câmara</tspan></text>
                   <text x="760" y="146"><tspan font-size="16" fill="#5b6472"><tspan class="cita" data-cita="46|caput">art. 46, caput</tspan> · Comissões</tspan><tspan x="760" dy="24" font-weight="700" fill="#3c7a46">na sede da Câmara</tspan><tspan x="760" dy="24">salvo <tspan font-weight="700" fill="#a3324a">CPI fora de Brasília</tspan></tspan></text>
-                  <text x="760" y="300"><tspan font-size="16" fill="#5b6472">significa</tspan><tspan x="760" dy="24">vale já, confirma depois</tspan></text>
-                  <text x="760" y="360"><tspan font-size="16" fill="#5b6472"><tspan class="cita" data-cita="1|pu">art. 1º, p. único</tspan> · este capítulo</tspan><tspan x="760" dy="24"><tspan font-weight="700" fill="#a3324a">Mesa</tspan> decide,</tspan><tspan x="760" dy="24"><tspan font-weight="700" fill="#a3324a">maioria absoluta</tspan> confirma</tspan></text>
-                  <text x="760" y="436"><tspan font-size="16" fill="#5b6472"><tspan class="cita" data-cita="15|§1">art. 15, § 1º</tspan> · papéis invertidos</tspan><tspan x="760" dy="24"><tspan font-weight="700" fill="#a3324a">Presidente</tspan> decide,</tspan><tspan x="760" dy="24"><tspan font-weight="700" fill="#a3324a">Mesa</tspan> confirma</tspan></text>
-                  <text x="760" y="512"><tspan font-size="16" fill="#5b6472"><tspan class="cita" data-cita="17|VI|o">art. 17, VI, "o"</tspan></tspan><tspan x="760" dy="24">repete o art. 15; cita o</tspan><tspan x="760" dy="24">"parágrafo único" (hoje § 1º)</tspan></text>
+                  <text x="760" y="350"><tspan font-size="16" fill="#5b6472"><tspan class="cita" data-cita="1|pu">art. 1º, p. único</tspan> · este capítulo</tspan><tspan x="760" dy="24"><tspan font-weight="700" fill="#a3324a">Mesa</tspan> decide,</tspan><tspan x="760" dy="24"><tspan font-weight="700" fill="#a3324a">maioria absoluta</tspan> confirma</tspan></text>
+                  <text x="760" y="426"><tspan font-size="16" fill="#5b6472"><tspan class="cita" data-cita="15|§1">art. 15, § 1º</tspan> · papéis invertidos</tspan><tspan x="760" dy="24"><tspan font-weight="700" fill="#a3324a">Presidente</tspan> decide,</tspan><tspan x="760" dy="24"><tspan font-weight="700" fill="#a3324a">Mesa</tspan> confirma</tspan></text>
+                  <text x="760" y="502"><tspan font-size="16" fill="#5b6472"><tspan class="cita" data-cita="17|VI|o">art. 17, VI, "o"</tspan></tspan><tspan x="760" dy="24">repete o art. 15; cita o</tspan><tspan x="760" dy="24">"parágrafo único" (hoje § 1º)</tspan></text>
                 </g>
               </svg>
             </div>
