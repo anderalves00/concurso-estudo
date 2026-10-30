@@ -3,31 +3,50 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Estudo — central de temas</title>
+<title>Concurso Público - Central de Estudo</title>
+<script>try{const t=localStorage.getItem("tema");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t;}catch(e){}</script>
 <style>
   :root {
     --fundo:#f3f1ec; --cartao:#fff; --texto:#1f2a37; --suave:#5b6472; --borda:#e2ded6;
     --azul:#2f6fb3; --azul-f:#e8f1fb; --laranja:#b4532a; --laranja-f:#fff4ec;
     --verde:#3c7a46; --verde-f:#eef6ee; --rosa:#a3324a; --rosa-f:#fdecef;
-    --hl:rgba(255,200,40,.45);
+    --painel:#f7f5f0; --sombra:0 1px 3px rgba(0,0,0,.06);
+    --hl:rgba(255,200,40,.7); --hl-azul:rgba(47,111,179,.32); --hl-laranja:rgba(180,83,42,.3); --hl-rosa:rgba(163,50,74,.28);
+    color-scheme:light;
   }
   @media (prefers-color-scheme: dark) {
-    :root { --fundo:#15191f; --cartao:#1f252d; --texto:#e7eaee; --suave:#a7b0bc; --borda:#2e3640;
-      --azul-f:#1c2a3b; --laranja-f:#33241b; --verde-f:#1d2b20; --rosa-f:#33202a; }
+    :root:not([data-theme="light"]) { --fundo:#15191f; --cartao:#1f252d; --texto:#e7eaee; --suave:#a7b0bc; --borda:#2e3640;
+      --azul:#6fa8e8; --laranja:#e38b60; --verde:#72c07e; --rosa:#e57d94;
+      --azul-f:#1c2a3b; --laranja-f:#33241b; --verde-f:#1d2b20; --rosa-f:#33202a;
+      --painel:#262d36; --sombra:0 1px 3px rgba(0,0,0,.4);
+      --hl:rgba(255,200,40,.42); --hl-azul:rgba(111,168,232,.38); --hl-laranja:rgba(227,139,96,.36); --hl-rosa:rgba(229,125,148,.34);
+      color-scheme:dark; }
   }
+  :root[data-theme="dark"] { --fundo:#15191f; --cartao:#1f252d; --texto:#e7eaee; --suave:#a7b0bc; --borda:#2e3640;
+      --azul:#6fa8e8; --laranja:#e38b60; --verde:#72c07e; --rosa:#e57d94;
+      --azul-f:#1c2a3b; --laranja-f:#33241b; --verde-f:#1d2b20; --rosa-f:#33202a;
+      --painel:#262d36; --sombra:0 1px 3px rgba(0,0,0,.4);
+      --hl:rgba(255,200,40,.42); --hl-azul:rgba(111,168,232,.38); --hl-laranja:rgba(227,139,96,.36); --hl-rosa:rgba(229,125,148,.34);
+      color-scheme:dark; }
   * { box-sizing:border-box; }
   body { margin:0; background:var(--fundo); color:var(--texto); font:16px/1.5 "Segoe UI", Arial, sans-serif; }
   main { padding:20px clamp(16px, 2.5vw, 40px) 48px; }
-  header { display:flex; flex-wrap:wrap; gap:12px 24px; align-items:end; justify-content:space-between; margin-bottom:18px; }
+  header { display:grid; grid-template-columns:1fr minmax(0, 560px) 1fr; gap:12px 24px; align-items:center; margin-bottom:18px; }
+  @media (max-width: 900px) { header { grid-template-columns:1fr auto; } .busca { grid-column:1 / -1; grid-row:2; } }
   h1 { font-size:1.6rem; margin:0; }
   .sub { color:var(--suave); margin:2px 0 0; }
-  .busca { flex:1 1 320px; max-width:560px; }
+  .busca { width:100%; }
+  button { font:inherit; font-size:.9rem; cursor:pointer; padding:7px 14px; border:1px solid var(--borda); border-radius:999px; background:var(--cartao); color:var(--texto); }
+  button:hover { border-color:var(--azul); }
+  #tema { justify-self:end; white-space:nowrap; }
+  .barra { display:flex; flex-wrap:wrap; gap:10px 16px; align-items:center; justify-content:space-between; margin:0 0 16px; }
+  .barra .acoes { display:flex; gap:8px; }
   .busca input { width:100%; font:inherit; padding:10px 14px; border:1px solid var(--borda); border-radius:10px; background:var(--cartao); color:var(--texto); }
   .busca small { color:var(--suave); }
-  .legenda { font-size:.9rem; color:var(--suave); margin:0 0 16px; }
+  .legenda { font-size:.9rem; color:var(--suave); margin:0; }
 
   /* destaque: negrito, um pouco maior, faixa na cor do quadro onde está */
-  mark { background:linear-gradient(transparent 58%, var(--hl) 58%, var(--hl) 94%, transparent 94%); color:inherit; font-weight:700; font-size:1.06em; padding:0 .06em; }
+  mark { background:linear-gradient(transparent 14%, var(--hl) 14%, var(--hl) 94%, transparent 94%); color:inherit; font-weight:700; font-size:1.06em; padding:0 .12em; border-radius:3px; -webkit-box-decoration-break:clone; box-decoration-break:clone; }
   mark.confunde { text-decoration:underline dotted var(--rosa) 2px; text-underline-offset:3px; }
 
   details.norma { margin-bottom:18px; }
@@ -42,24 +61,28 @@
   h2 { font-size:.85rem; margin:20px 0 10px; color:var(--suave); text-transform:uppercase; letter-spacing:.07em; }
   blockquote { margin:0; padding:10px 16px; border-left:4px solid var(--azul); background:var(--azul-f); border-radius:0 10px 10px 0; }
   blockquote p { margin:6px 0; }
+  .texto-lei { position:relative; }
+  .texto-lei.recolhido { max-height:14em; overflow:hidden; }
+  .texto-lei.recolhido::after { content:""; position:absolute; left:0; right:0; bottom:0; height:3em; background:linear-gradient(transparent, var(--azul-f)); }
+  .alternar-texto { margin-top:8px; }
 
   .visual { display:grid; grid-template-columns:minmax(0, 5fr) minmax(0, 6fr); gap:16px; align-items:start; }
-  @media (max-width: 1100px) { .visual { grid-template-columns:1fr; } }
-  .painel { border:1px solid var(--borda); border-radius:12px; padding:14px; }
+  @media (max-width: 1100px) { .visual { grid-template-columns:minmax(0, 1fr); } }
+  .painel { background:var(--painel); border:1px solid var(--borda); border-radius:12px; padding:14px; box-shadow:var(--sombra); }
   .painel h3 { margin:0 0 12px; font-size:1rem; text-align:center; }
 
   /* infográfico */
   .bloco { border-radius:10px; padding:10px 12px; margin-bottom:12px; text-align:center; }
   .rot { font-size:.75rem; font-weight:700; letter-spacing:.08em; display:block; margin-bottom:4px; }
-  .regra { background:var(--azul-f); border:1px solid var(--azul); --hl:rgba(47,111,179,.28); } .regra .rot { color:var(--azul); }
+  .regra { background:var(--azul-f); border:1px solid var(--azul); --hl:var(--hl-azul); } .regra .rot { color:var(--azul); }
   .regra .dois { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
   .regra small, .passo small { display:block; color:var(--suave); font-size:.8rem; }
-  .titulo-exc { text-align:center; font-size:.85rem; font-weight:700; color:var(--laranja); letter-spacing:.05em; margin:4px 0 8px; --hl:rgba(180,83,42,.25); }
+  .titulo-exc { text-align:center; font-size:.85rem; font-weight:700; color:var(--laranja); letter-spacing:.05em; margin:4px 0 8px; --hl:var(--hl-laranja); }
   .passos { display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; margin-bottom:12px; }
   @media (max-width: 1500px) { .passos { grid-template-columns:repeat(2, 1fr); } }
-  .passo { background:var(--laranja-f); border:1px solid var(--laranja); border-radius:10px; padding:8px 10px; text-align:center; --hl:rgba(180,83,42,.25); }
+  .passo { background:var(--laranja-f); border:1px solid var(--laranja); border-radius:10px; padding:8px 10px; text-align:center; --hl:var(--hl-laranja); }
   .passo .rot { color:var(--laranja); }
-  .confunda { background:var(--rosa-f); border:1px dashed var(--rosa); --hl:rgba(163,50,74,.22); }
+  .confunda { background:var(--rosa-f); border:1px dashed var(--rosa); --hl:var(--hl-rosa); }
   .confunda .rot { color:var(--rosa); }
   .confunda table { width:100%; border-collapse:collapse; }
   .confunda th { font-size:.72rem; color:var(--suave); letter-spacing:.06em; padding:4px; }
@@ -69,10 +92,19 @@
   /* mapa mental */
   .mapa-rolagem { overflow-x:auto; }
   .mapa-rolagem svg { width:100%; min-width:640px; height:auto; display:block; }
+  .mapa-rolagem g[fill="#1f2a37"] { fill:var(--texto); }
+  .mapa-rolagem rect[fill="#1f2a37"] { stroke:var(--suave); stroke-width:2; }
+  .mapa-rolagem tspan[fill="#5b6472"] { fill:var(--suave); }
+  .mapa-rolagem tspan[fill="#2f6fb3"] { fill:var(--azul); }
+  .mapa-rolagem tspan[fill="#b4532a"] { fill:var(--laranja); }
+  .mapa-rolagem tspan[fill="#3c7a46"] { fill:var(--verde); }
+  .mapa-rolagem tspan[fill="#a3324a"] { fill:var(--rosa); }
 
-  ol.questoes li { margin-bottom:8px; }
-  details.gabarito { margin-top:10px; border:1px solid var(--borda); border-radius:10px; padding:8px 12px; }
-  details.gabarito summary { cursor:pointer; font-weight:700; }
+  ol.questoes li { margin-bottom:14px; }
+  ol.questoes p { margin:0 0 6px; }
+  details.gabarito { border:1px solid var(--borda); border-radius:10px; padding:6px 12px; font-size:.95rem; }
+  details.gabarito summary { cursor:pointer; font-weight:700; color:var(--suave); }
+  details.gabarito p { margin:6px 0 2px; }
   .certo { color:var(--verde); font-weight:700; } .errado { color:var(--rosa); font-weight:700; }
   .oculto { display:none; }
   @media (max-width: 560px) { .passos, .regra .dois { grid-template-columns:1fr; } }
@@ -81,19 +113,20 @@
 <body>
 <main>
   <header>
-    <div>
-      <h1>Central de temas</h1>
-      <p class="sub">Legislação oficial, verificada no projeto, estudada por partes</p>
-    </div>
+    <h1>Concurso Público - Central de Estudo</h1>
     <div class="busca">
       <input id="busca" type="search" placeholder="Pesquisar tema, artigo ou termo (ex.: ad referendum, art. 46, sede)" aria-label="Pesquisar">
       <small id="resultado"></small>
     </div>
+    <button id="tema" type="button"></button>
   </header>
+  <div class="barra">
   <p class="legenda"><mark>destaque</mark> = o que decide a questão (na cor do quadro) · <mark class="confunde">pontilhado</mark> = o que se confunde com outro trecho</p>
+    <div class="acoes"><button type="button" data-abrir="1">Expandir todos</button><button type="button" data-abrir="">Recolher todos</button></div>
+  </div>
 
   <details class="norma" open>
-    <summary>Regimento Interno da Câmara dos Deputados <span class="sub">· Res. 17/1989, até a RCD 34/2026</span></summary>
+    <summary>Regimento Interno da Câmara dos Deputados <span class="sub">· Resolução nº 17/1989 · atualizado até a Resolução nº 34/2026</span></summary>
 
     <details class="parte" open>
       <summary>01 · Título I, Capítulo I — Da Sede (art. 1º)</summary>
@@ -101,7 +134,7 @@
         <p class="sub">Edital da Câmara: Dir. Const. 7.1 "Disposições preliminares e Órgãos da Câmara (arts. 1º a 24…)"</p>
 
         <h2>Texto</h2>
-        <blockquote>
+        <blockquote class="texto-lei">
           <p><strong>Art. 1º</strong> A Câmara dos Deputados, com sede na Capital Federal, funciona no Palácio do Congresso Nacional.</p>
           <p><strong>Parágrafo único.</strong> Havendo motivo relevante, ou de força maior, a Câmara poderá, por deliberação da Mesa, <em>ad referendum</em> da maioria absoluta dos Deputados, reunir-se em outro edifício ou em ponto diverso no território nacional.</p>
         </blockquote>
@@ -190,24 +223,13 @@
 
         <h2>Questões — certo ou errado (estilo Cebraspe)</h2>
         <ol class="questoes">
-          <li>A Câmara dos Deputados poderá reunir-se em outro edifício somente se houver, cumulativamente, motivo relevante e de força maior.</li>
-          <li>A decisão de reunir a Câmara fora do Palácio do Congresso Nacional é tomada pela Mesa e submetida posteriormente à maioria absoluta dos Deputados.</li>
-          <li>Havendo força maior, o Presidente da Câmara poderá, por ato próprio, transferir as reuniões da Casa para outro ponto do território nacional.</li>
-          <li>Para a Câmara se reunir em ponto diverso do território nacional, exige-se aprovação prévia da maioria simples dos Deputados presentes.</li>
-          <li>As Comissões reúnem-se na sede da Câmara, ressalvadas as convocações de CPI que se realizarem fora de Brasília.</li>
-          <li>Em matéria inadiável, a Mesa pode decidir <em>ad referendum</em> do Presidente sobre assunto de competência deste.</li>
+          <li><p>A Câmara dos Deputados poderá reunir-se em outro edifício somente se houver, cumulativamente, motivo relevante e de força maior.</p><details class="gabarito"><summary>Gabarito</summary><p><span class="errado">Errado.</span> "motivo relevante, <strong>ou</strong> de força maior" — basta uma das causas.</p></details></li>
+          <li><p>A decisão de reunir a Câmara fora do Palácio do Congresso Nacional é tomada pela Mesa e submetida posteriormente à maioria absoluta dos Deputados.</p><details class="gabarito"><summary>Gabarito</summary><p><span class="certo">Certo.</span> Deliberação da Mesa, <em>ad referendum</em> da maioria absoluta dos Deputados.</p></details></li>
+          <li><p>Havendo força maior, o Presidente da Câmara poderá, por ato próprio, transferir as reuniões da Casa para outro ponto do território nacional.</p><details class="gabarito"><summary>Gabarito</summary><p><span class="errado">Errado.</span> Quem delibera é a <strong>Mesa</strong>, não o Presidente.</p></details></li>
+          <li><p>Para a Câmara se reunir em ponto diverso do território nacional, exige-se aprovação prévia da maioria simples dos Deputados presentes.</p><details class="gabarito"><summary>Gabarito</summary><p><span class="errado">Errado.</span> Não é aprovação prévia (é <em>ad referendum</em>) e o quórum é a <strong>maioria absoluta dos Deputados</strong>.</p></details></li>
+          <li><p>As Comissões reúnem-se na sede da Câmara, ressalvadas as convocações de CPI que se realizarem fora de Brasília.</p><details class="gabarito"><summary>Gabarito</summary><p><span class="certo">Certo.</span> Art. 46, <em>caput</em>.</p></details></li>
+          <li><p>Em matéria inadiável, a Mesa pode decidir <em>ad referendum</em> do Presidente sobre assunto de competência deste.</p><details class="gabarito"><summary>Gabarito</summary><p><span class="errado">Errado.</span> É o inverso (art. 15, § 1º): o <strong>Presidente</strong> decide <em>ad referendum</em> da <strong>Mesa</strong>, sobre assunto de competência da Mesa.</p></details></li>
         </ol>
-        <details class="gabarito">
-          <summary>Gabarito comentado</summary>
-          <ol>
-            <li><span class="errado">Errado.</span> "motivo relevante, <strong>ou</strong> de força maior" — basta uma das causas.</li>
-            <li><span class="certo">Certo.</span> Deliberação da Mesa, <em>ad referendum</em> da maioria absoluta dos Deputados.</li>
-            <li><span class="errado">Errado.</span> Quem delibera é a <strong>Mesa</strong>, não o Presidente.</li>
-            <li><span class="errado">Errado.</span> Não é aprovação prévia (é <em>ad referendum</em>) e o quórum é a <strong>maioria absoluta dos Deputados</strong>.</li>
-            <li><span class="certo">Certo.</span> Art. 46, <em>caput</em>.</li>
-            <li><span class="errado">Errado.</span> É o inverso (art. 15, § 1º): o <strong>Presidente</strong> decide <em>ad referendum</em> da <strong>Mesa</strong>, sobre assunto de competência da Mesa.</li>
-          </ol>
-        </details>
       </div>
     </details>
   </details>
@@ -233,7 +255,55 @@
       if (q && visivel) n.open = true;
     });
     saida.textContent = q ? `${achadas} parte(s) encontrada(s)` : "";
+    ajustarTextos();
   });
+
+  const raiz = document.documentElement, botaoTema = document.getElementById("tema");
+  const escuro = matchMedia("(prefers-color-scheme: dark)");
+  const temaAtual = () => raiz.dataset.theme || (escuro.matches ? "dark" : "light");
+  const rotularTema = () => {
+    const d = temaAtual() === "dark";
+    botaoTema.textContent = d ? "☀ Modo claro" : "☾ Modo escuro";
+    botaoTema.setAttribute("aria-pressed", String(d));
+  };
+  botaoTema.addEventListener("click", () => {
+    const novo = temaAtual() === "dark" ? "light" : "dark";
+    raiz.dataset.theme = novo;
+    try { localStorage.setItem("tema", novo); } catch (e) {}
+    rotularTema();
+  });
+  escuro.addEventListener("change", rotularTema);
+  rotularTema();
+
+  document.querySelectorAll("[data-abrir]").forEach(b => b.addEventListener("click", () => {
+    const abrir = Boolean(b.dataset.abrir);
+    [...normas, ...partes].forEach(d => { if (!d.classList.contains("oculto")) d.open = abrir; });
+  }));
+
+  const LIMITE = 14 * parseFloat(getComputedStyle(document.body).fontSize);
+  function ajustarTextos() {
+    document.querySelectorAll(".texto-lei").forEach(t => {
+      if (!t.offsetParent || t.dataset.aberto) return;  // fechado (sem medida) ou expandido pelo usuário
+      let b = t.nextElementSibling?.classList.contains("alternar-texto") ? t.nextElementSibling : null;
+      const longo = t.scrollHeight > LIMITE + 8;
+      t.classList.toggle("recolhido", longo);
+      if (longo && !b) {
+        b = document.createElement("button");
+        b.type = "button"; b.className = "alternar-texto"; b.textContent = "Expandir texto";
+        b.addEventListener("click", () => {
+          const abrir = t.classList.contains("recolhido");
+          t.classList.toggle("recolhido", !abrir);
+          if (abrir) t.dataset.aberto = "1"; else delete t.dataset.aberto;
+          b.textContent = abrir ? "Recolher texto" : "Expandir texto";
+        });
+        t.after(b);
+      }
+      if (b) b.hidden = !longo;
+    });
+  }
+  document.addEventListener("toggle", ajustarTextos, true);
+  addEventListener("resize", ajustarTextos);
+  ajustarTextos();
 </script>
 </body>
 </html>
