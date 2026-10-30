@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- gerado por ferramentas/gerar_estudo.py a partir de "Conteúdo de estudo/" — não editar à mão -->
 <title>Concurso Público - Central de Estudo</title>
 <script>try{const t=localStorage.getItem("tema");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t;}catch(e){}</script>
 <style>
@@ -12,7 +13,7 @@
     --verde:#3c7a46; --verde-f:#eef6ee; --rosa:#a3324a; --rosa-f:#fdecef;
     --erro:#c0392b; --erro-f:#fdecea;
     --parte:#e8e4dc; --painel:#fff; --sombra:0 1px 3px rgba(0,0,0,.06);
-    --hl:rgba(255,200,40,.7); --hl-azul:rgba(47,111,179,.32); --hl-laranja:rgba(180,83,42,.3); --hl-rosa:rgba(163,50,74,.28);
+    --hl:rgba(255,200,40,.7); --hl-azul:rgba(47,111,179,.32); --hl-laranja:rgba(180,83,42,.3); --hl-rosa:rgba(163,50,74,.28); --hl-verde:rgba(60,122,70,.3);
     color-scheme:light;
   }
   @media (prefers-color-scheme: dark) {
@@ -21,7 +22,7 @@
       --azul-f:#1c2a3b; --laranja-f:#33241b; --verde-f:#1d2b20; --rosa-f:#33202a;
       --erro:#f07167; --erro-f:#3a1f22;
       --parte:#1f252d; --painel:#262d36; --sombra:0 1px 3px rgba(0,0,0,.4);
-      --hl:rgba(255,200,40,.42); --hl-azul:rgba(111,168,232,.38); --hl-laranja:rgba(227,139,96,.36); --hl-rosa:rgba(229,125,148,.34);
+      --hl:rgba(255,200,40,.42); --hl-azul:rgba(111,168,232,.38); --hl-laranja:rgba(227,139,96,.36); --hl-rosa:rgba(229,125,148,.34); --hl-verde:rgba(114,192,126,.36);
       color-scheme:dark; }
   }
   :root[data-theme="dark"] { --fundo:#15191f; --cartao:#1f252d; --texto:#e7eaee; --suave:#a7b0bc; --borda:#2e3640;
@@ -29,7 +30,7 @@
       --azul-f:#1c2a3b; --laranja-f:#33241b; --verde-f:#1d2b20; --rosa-f:#33202a;
       --erro:#f07167; --erro-f:#3a1f22;
       --parte:#1f252d; --painel:#262d36; --sombra:0 1px 3px rgba(0,0,0,.4);
-      --hl:rgba(255,200,40,.42); --hl-azul:rgba(111,168,232,.38); --hl-laranja:rgba(227,139,96,.36); --hl-rosa:rgba(229,125,148,.34);
+      --hl:rgba(255,200,40,.42); --hl-azul:rgba(111,168,232,.38); --hl-laranja:rgba(227,139,96,.36); --hl-rosa:rgba(229,125,148,.34); --hl-verde:rgba(114,192,126,.36);
       color-scheme:dark; }
   * { box-sizing:border-box; }
   body { margin:0; background:var(--fundo); color:var(--texto); font:16px/1.5 "Segoe UI", Arial, sans-serif; }
@@ -54,6 +55,9 @@
 
   details.norma { margin-bottom:18px; }
   details.norma > summary { cursor:pointer; font-size:1.25rem; font-weight:700; padding:6px 0; list-style:none; }
+  details.nivel { margin:4px 0 4px 16px; }
+  details.norma > details.nivel { margin-left:4px; }
+  details.nivel > summary { cursor:pointer; font-weight:700; font-size:1.08rem; padding:5px 0; }
   details.parte { background:var(--parte); border:1px solid var(--borda); border-radius:14px; margin:10px 0; }
   details.parte > summary { cursor:pointer; padding:12px 18px; font-weight:700; font-size:1.05rem; list-style:none; }
   details > summary { list-style:none; }
@@ -77,20 +81,24 @@
   /* infográfico */
   .bloco { border-radius:10px; padding:10px 12px; margin-bottom:12px; text-align:center; }
   .rot { font-size:.75rem; font-weight:700; letter-spacing:.08em; display:block; margin-bottom:4px; }
-  .regra { background:var(--azul-f); border:1px solid var(--azul); --hl:var(--hl-azul); } .regra .rot { color:var(--azul); }
-  .regra .dois { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
-  .regra small, .passo small { display:block; color:var(--suave); font-size:.8rem; }
-  .titulo-exc { text-align:center; font-size:.85rem; font-weight:700; color:var(--laranja); letter-spacing:.05em; margin:4px 0 8px; --hl:var(--hl-laranja); }
+  .cor-azul { --c:var(--azul); --cf:var(--azul-f); --hl:var(--hl-azul); }
+  .cor-laranja { --c:var(--laranja); --cf:var(--laranja-f); --hl:var(--hl-laranja); }
+  .cor-verde { --c:var(--verde); --cf:var(--verde-f); --hl:var(--hl-verde); }
+  .cor-rosa { --c:var(--rosa); --cf:var(--rosa-f); --hl:var(--hl-rosa); }
+  .bloco .rot, .passo .rot { color:var(--c); }
+  .pares { background:var(--cf); border:1px solid var(--c); }
+  .pares .lista { display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:8px; }
+  .pares small, .passo small { display:block; color:var(--suave); font-size:.8rem; }
+  .titulo-bloco { text-align:center; font-size:.85rem; font-weight:700; color:var(--c); letter-spacing:.05em; margin:4px 0 8px; }
   .passos { display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; margin-bottom:12px; }
   @media (max-width: 1500px) { .passos { grid-template-columns:repeat(2, 1fr); } }
-  .passo { background:var(--laranja-f); border:1px solid var(--laranja); border-radius:10px; padding:8px 10px; text-align:center; --hl:var(--hl-laranja); }
-  .passo .rot { color:var(--laranja); }
-  .confunda { background:var(--rosa-f); border:1px dashed var(--rosa); --hl:var(--hl-rosa); }
-  .confunda .rot { color:var(--rosa); }
-  .confunda table { width:100%; border-collapse:collapse; }
-  .confunda th { font-size:.72rem; color:var(--suave); letter-spacing:.06em; padding:4px; }
-  .confunda td { padding:6px 4px; border-top:1px solid var(--borda); }
-  .confunda small { display:block; color:var(--suave); margin-top:6px; font-size:.8rem; }
+  .passo { background:var(--cf); border:1px solid var(--c); border-radius:10px; padding:8px 10px; text-align:center; }
+  .tabela { background:var(--cf); border:1px dashed var(--c); }
+  .tabela table { width:100%; border-collapse:collapse; }
+  .tabela th { font-size:.72rem; color:var(--suave); letter-spacing:.06em; padding:4px; }
+  .tabela td { padding:6px 4px; border-top:1px solid var(--borda); }
+  .tabela small { display:block; color:var(--suave); margin-top:6px; font-size:.8rem; }
+  h3.visao { font-size:1rem; margin:18px 0 10px; }
 
   /* mapa mental */
   .mapa-rolagem { overflow-x:auto; }
@@ -129,7 +137,7 @@
 
   details.bloco-q { background:var(--painel); border:1px solid var(--borda); border-radius:12px; padding:4px 14px 6px; margin-top:20px; box-shadow:var(--sombra); }
   details.bloco-q > summary { font-size:.85rem; font-weight:700; margin:10px 0; color:var(--suave); text-transform:uppercase; letter-spacing:.07em; cursor:pointer; }
-  @media (max-width: 560px) { .passos, .regra .dois { grid-template-columns:1fr; } }
+  @media (max-width: 560px) { .passos, .pares .lista { grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
@@ -146,128 +154,69 @@
   <p class="legenda"><mark>destaque</mark> = o que decide a questão (na cor do quadro) · <mark class="confunde">pontilhado</mark> = o que se confunde com outro trecho</p>
     <div class="acoes"><button type="button" data-abrir="1">Expandir todos</button><button type="button" data-abrir="">Recolher todos</button></div>
   </div>
-
-  <details class="norma">
-    <summary>Regimento Interno da Câmara dos Deputados <span class="sub">· Resolução nº 17/1989 · atualizado até a Resolução nº 34/2026</span></summary>
-
-    <details class="parte">
-      <summary>01 · Título I, Capítulo I — Da Sede (<span class="cita" data-cita="1">art. 1º</span>)</summary>
-      <div class="corpo">
-        <div class="edital">Edital da Câmara · Noções de Direito Constitucional e de Regimento Interno da Câmara dos Deputados<br>
-          <b>7 Regimento Interno da Câmara dos Deputados</b><br>
-          <b>7.1 Disposições preliminares e Órgãos da Câmara (arts. 1º a 24 e suas alterações).</b></div>
-
-        <h2>Texto</h2>
-        <blockquote class="texto-lei">
-          <p><strong>Art. 1º</strong> A Câmara dos Deputados, com sede na Capital Federal, funciona no Palácio do Congresso Nacional.</p>
-          <p><strong>Parágrafo único.</strong> Havendo motivo relevante, ou de força maior, a Câmara poderá, por deliberação da Mesa, <em>ad referendum</em> da maioria absoluta dos Deputados, reunir-se em outro edifício ou em ponto diverso no território nacional.</p>
-        </blockquote>
-
-        <h2>Visual</h2>
-        <div class="visual">
-          <section class="painel">
-            <h3>Infográfico</h3>
-            <div class="bloco regra">
-              <span class="rot">REGRA (<span class="cita" data-cita="1|caput">caput</span>)</span>
-              <div class="dois">
-                <div><small>sede</small><mark>Capital Federal</mark></div>
-                <div><small>funciona no</small><mark>Palácio do Congresso Nacional</mark></div>
-              </div>
-            </div>
-            <div class="titulo-exc">EXCEÇÃO (<span class="cita" data-cita="1|pu">parágrafo único</span>) — a Câmara <mark>poderá</mark> (faculdade, não dever)</div>
-            <div class="passos">
-              <div class="passo"><span class="rot">1 · QUANDO</span>motivo relevante <mark>ou</mark> de força maior<small>basta uma das duas</small></div>
-              <div class="passo"><span class="rot">2 · QUEM DECIDE</span><mark class="confunde">a Mesa</mark>, por deliberação<small>não o Presidente sozinho</small></div>
-              <div class="passo"><span class="rot">3 · CONFIRMA DEPOIS</span><mark class="confunde"><em>ad referendum</em></mark> da <mark>maioria absoluta dos Deputados</mark><small>vale já · do total, não dos presentes</small></div>
-              <div class="passo"><span class="rot">4 · PARA ONDE</span>outro edifício ou ponto diverso <mark>no território nacional</mark></div>
-            </div>
-            <div class="bloco confunda">
-              <span class="rot">NÃO CONFUNDA — "ad referendum" com papéis invertidos</span>
-              <table>
-                <tr><th>ONDE</th><th>QUEM DECIDE</th><th>QUEM CONFIRMA DEPOIS</th></tr>
-                <tr><td><span class="cita" data-cita="1|pu">art. 1º, p. único</span></td><td><mark class="confunde">a Mesa</mark></td><td><mark class="confunde">maioria absoluta dos Deputados</mark></td></tr>
-                <tr><td><span class="cita" data-cita="15|§1">art. 15, § 1º</span></td><td><mark class="confunde">o Presidente</mark></td><td><mark class="confunde">a Mesa</mark></td></tr>
-              </table>
-              <small><span class="cita" data-cita="15|§1">art. 15, § 1º</span>: só em matéria inadiável de competência da Mesa, exceto no caso do <span class="cita" data-cita="15|XXX">inciso XXX</span> (suspensão cautelar de mandato). O <span class="cita" data-cita="17|VI|o">art. 17, VI, "o"</span>, repete essa atribuição do Presidente, remetendo ao <span class="cita" data-cita="15|§1">art. 15, § 1º</span> (antigo parágrafo único).</small>
-            </div>
-          </section>
-
-          <section class="painel">
-            <h3>Mapa mental</h3>
-            <div class="mapa-rolagem">
-              <svg viewBox="-100 25 1210 600" font-family="Segoe UI, Arial, sans-serif" role="img" aria-label="Mapa mental: Da Sede, com ramos Regra, Exceção, sede em outros artigos e ad referendum no art. 1º e em outros artigos">
-                <g fill="none" stroke-linecap="round">
-                  <!-- ramos principais -->
-                  <path d="M500,300 C430,300 420,110 400,110" stroke="#2f6fb3" stroke-width="5"/>
-                  <path d="M500,300 C430,300 420,420 400,420" stroke="#b4532a" stroke-width="5"/>
-                  <path d="M500,300 C560,300 560,110 580,110" stroke="#3c7a46" stroke-width="5"/>
-                  <path d="M500,300 C560,300 560,420 580,420" stroke="#a3324a" stroke-width="5"/>
-                  <!-- folhas -->
-                  <g stroke="#2f6fb3" stroke-width="2"><path d="M260,110 C250,110 255,72 245,72"/><path d="M260,110 C250,110 255,152 245,152"/></g>
-                  <g stroke="#b4532a" stroke-width="2">
-                    <path d="M260,420 C250,420 255,302 245,302"/><path d="M260,420 C250,420 255,362 245,362"/>
-                    <path d="M260,420 C250,420 245,422 245,422"/><path d="M260,420 C250,420 255,482 245,482"/>
-                    <path d="M260,420 C250,420 255,542 245,542"/></g>
-                  <g stroke="#3c7a46" stroke-width="2"><path d="M740,110 C750,110 745,62 755,62"/><path d="M740,110 C750,110 745,152 755,152"/></g>
-                  <g stroke="#a3324a" stroke-width="2"><path d="M740,420 C750,420 745,356 755,356"/><path d="M740,420 C750,420 745,432 755,432"/><path d="M740,420 C750,420 745,508 755,508"/></g>
-                </g>
-                <!-- centro -->
-                <rect x="420" y="268" width="160" height="64" rx="32" fill="#1f2a37"/>
-                <text x="500" y="297" text-anchor="middle" font-size="21" font-weight="700" fill="#fff">DA SEDE</text>
-                <text x="500" y="318" text-anchor="middle" font-size="13" fill="#cfd6df">RICD, <tspan class="cita" data-cita="1">art. 1º</tspan></text>
-                <!-- nós dos ramos -->
-                <g font-size="16" font-weight="700" text-anchor="middle" fill="#fff">
-                  <rect x="260" y="90" width="140" height="40" rx="20" fill="#2f6fb3"/><text x="330" y="116">Regra</text>
-                  <rect x="260" y="400" width="140" height="40" rx="20" fill="#b4532a"/><text x="330" y="426">Exceção</text>
-                  <rect x="580" y="84" width="160" height="52" rx="26" fill="#3c7a46"/><text x="660" y="106">Sede</text>
-                  <rect x="580" y="394" width="160" height="52" rx="26" fill="#a3324a"/><text x="660" y="416">ad referendum</text>
-                </g>
-                <g font-size="13" text-anchor="middle" fill="#fff" opacity=".9">
-                  <text x="660" y="126">em outros artigos</text>
-                  <text x="660" y="436">vale já, confirma depois</text>
-                </g>
-                <!-- folhas: rótulo + valor -->
-                <g font-size="21" fill="#1f2a37" text-anchor="end">
-                  <text x="240" y="66"><tspan font-size="16" fill="#5b6472">sede</tspan><tspan x="240" dy="24" font-weight="700" fill="#2f6fb3">Capital Federal</tspan></text>
-                  <text x="240" y="146"><tspan font-size="16" fill="#5b6472">funciona no</tspan><tspan x="240" dy="24" font-weight="700" fill="#2f6fb3">Palácio do Congresso Nacional</tspan></text>
-                  <text x="240" y="296"><tspan font-size="16" fill="#5b6472">quando</tspan><tspan x="240" dy="24">motivo relevante <tspan font-weight="700" fill="#b4532a">OU</tspan> força maior</tspan></text>
-                  <text x="240" y="416"><tspan font-size="16" fill="#5b6472">quem decide</tspan><tspan x="240" dy="24" font-weight="700" fill="#b4532a">a Mesa</tspan></text>
-                  <text x="240" y="356"><tspan font-size="16" fill="#5b6472">como</tspan><tspan x="240" dy="24"><tspan font-weight="700" fill="#b4532a">poderá</tspan> (faculdade)</tspan></text>
-                  <text x="240" y="476"><tspan font-size="16" fill="#5b6472">confirma depois (ad referendum)</tspan><tspan x="240" dy="24" font-weight="700" fill="#b4532a">maioria absoluta dos Deputados</tspan></text>
-                  <text x="240" y="536"><tspan font-size="16" fill="#5b6472">para onde</tspan><tspan x="240" dy="24">outro edifício ou ponto diverso</tspan><tspan x="240" dy="24" font-weight="700" fill="#b4532a">no território nacional</tspan></text>
-                </g>
-                <g font-size="21" fill="#1f2a37">
-                  <text x="760" y="56"><tspan font-size="16" fill="#5b6472"><tspan class="cita" data-cita="4|caput">art. 4º, caput</tspan> · posse</tspan><tspan x="760" dy="24">sessão preparatória</tspan><tspan x="760" dy="24" font-weight="700" fill="#3c7a46">na sede da Câmara</tspan></text>
-                  <text x="760" y="146"><tspan font-size="16" fill="#5b6472"><tspan class="cita" data-cita="46|caput">art. 46, caput</tspan> · Comissões</tspan><tspan x="760" dy="24" font-weight="700" fill="#3c7a46">na sede da Câmara</tspan><tspan x="760" dy="24">salvo <tspan font-weight="700" fill="#3c7a46">CPI fora de Brasília</tspan></tspan></text>
-                  <text x="760" y="350"><tspan font-size="16" fill="#5b6472"><tspan class="cita" data-cita="1|pu">art. 1º, p. único</tspan> · este capítulo</tspan><tspan x="760" dy="24"><tspan font-weight="700" fill="#a3324a">Mesa</tspan> decide,</tspan><tspan x="760" dy="24"><tspan font-weight="700" fill="#a3324a">maioria absoluta</tspan> confirma</tspan></text>
-                  <text x="760" y="426"><tspan font-size="16" fill="#5b6472"><tspan class="cita" data-cita="15|§1">art. 15, § 1º</tspan> · papéis invertidos</tspan><tspan x="760" dy="24"><tspan font-weight="700" fill="#a3324a">Presidente</tspan> decide,</tspan><tspan x="760" dy="24"><tspan font-weight="700" fill="#a3324a">Mesa</tspan> confirma</tspan></text>
-                  <text x="760" y="502"><tspan font-size="16" fill="#5b6472"><tspan class="cita" data-cita="17|VI|o">art. 17, VI, "o"</tspan></tspan><tspan x="760" dy="24">repete o art. 15; cita o</tspan><tspan x="760" dy="24">"parágrafo único" (hoje § 1º)</tspan></text>
-                </g>
-              </svg>
-            </div>
-          </section>
-        </div>
-        <p class="sub"><small>Conceitos (fora do texto do artigo): <em>ad referendum</em> = decide-se agora, sujeito a confirmação posterior. Maioria absoluta = mais da metade do total de membros, não dos presentes.</small></p>
-
-        <details class="bloco-q">
-        <summary>Questões — certo ou errado (estilo Cebraspe)</summary>
-        <ol class="questoes">
-          <li data-resp="errado"><p>A Câmara dos Deputados poderá reunir-se em outro edifício somente se houver, cumulativamente, motivo relevante e de força maior.</p><details class="gabarito"><summary>Gabarito</summary><p><span class="errado">Errado.</span> "motivo relevante, <strong>ou</strong> de força maior" — basta uma das causas.</p></details></li>
-          <li data-resp="certo"><p>A decisão de reunir a Câmara fora do Palácio do Congresso Nacional é tomada pela Mesa e submetida posteriormente à maioria absoluta dos Deputados.</p><details class="gabarito"><summary>Gabarito</summary><p><span class="certo">Certo.</span> Deliberação da Mesa, <em>ad referendum</em> da maioria absoluta dos Deputados.</p></details></li>
-          <li data-resp="errado"><p>Havendo força maior, o Presidente da Câmara poderá, por ato próprio, transferir as reuniões da Casa para outro ponto do território nacional.</p><details class="gabarito"><summary>Gabarito</summary><p><span class="errado">Errado.</span> Quem delibera é a <strong>Mesa</strong>, não o Presidente.</p></details></li>
-          <li data-resp="errado"><p>Para a Câmara se reunir em ponto diverso do território nacional, exige-se aprovação prévia da maioria simples dos Deputados presentes.</p><details class="gabarito"><summary>Gabarito</summary><p><span class="errado">Errado.</span> Não é aprovação prévia (é <em>ad referendum</em>) e o quórum é a <strong>maioria absoluta dos Deputados</strong>.</p></details></li>
-          <li data-resp="certo"><p>As Comissões reúnem-se na sede da Câmara, ressalvadas as convocações de CPI que se realizarem fora de Brasília.</p><details class="gabarito"><summary>Gabarito</summary><p><span class="certo">Certo.</span> <span class="cita" data-cita="46|caput">Art. 46, <em>caput</em></span>.</p></details></li>
-          <li data-resp="errado"><p>Em matéria inadiável, a Mesa pode decidir <em>ad referendum</em> do Presidente sobre assunto de competência deste.</p><details class="gabarito"><summary>Gabarito</summary><p><span class="errado">Errado.</span> É o inverso (<span class="cita" data-cita="15|§1">art. 15, § 1º</span>): o <strong>Presidente</strong> decide <em>ad referendum</em> da <strong>Mesa</strong>, sobre assunto de competência da Mesa.</p></details></li>
-        </ol>
-        </details>
-      </div>
-    </details>
-  </details>
+<details class="norma"><summary>Regimento Interno da Câmara dos Deputados <span class="sub">· Resolução nº 17/1989 · atualizado até a Resolução nº 34/2026</span></summary><details class="nivel"><summary>Título I — Disposições Preliminares</summary><details class="nivel"><summary>Capítulo I — Da Sede</summary><details class="parte"><summary>01 · Da Sede (<span class="cita" data-cita="ricd|1">art. 1º</span>)</summary><div class="corpo"><div class="edital">Edital da Câmara · Noções de Direito Constitucional e de Regimento Interno da Câmara dos Deputados<br><b>7 Regimento Interno da Câmara dos Deputados</b><br><b>7.1 Disposições preliminares e Órgãos da Câmara (arts. 1º a 24 e suas alterações).</b></div><h2>Texto</h2><blockquote class="texto-lei"><p><strong>Art. 1º</strong> A Câmara dos Deputados, com sede na Capital Federal, funciona no Palácio do Congresso Nacional.</p><p><strong>Parágrafo único.</strong> Havendo motivo relevante, ou de força maior, a Câmara poderá, por deliberação da Mesa, ad referendum da maioria absoluta dos Deputados, reunir-se em outro edifício ou em ponto diverso no território nacional.</p></blockquote><h2>Visual</h2><div class="visual"><section class="painel"><h3>Infográfico</h3><div class="bloco pares cor-azul"><span class="rot">REGRA (<span class="cita" data-cita="ricd|1|caput">caput</span>)</span><div class="lista"><div><small>sede</small><mark>Capital Federal</mark></div><div><small>funciona no</small><mark>Palácio do Congresso Nacional</mark></div></div></div>
+<div class="titulo-bloco cor-laranja">EXCEÇÃO (<span class="cita" data-cita="ricd|1|pu">parágrafo único</span>) — a Câmara <mark>poderá</mark> (faculdade, não dever)</div>
+<div class="passos cor-laranja"><div class="passo"><span class="rot">1 · QUANDO</span>motivo relevante <mark>ou</mark> de força maior<small>basta uma das duas</small></div><div class="passo"><span class="rot">2 · QUEM DECIDE</span><mark class="confunde">a Mesa</mark>, por deliberação<small>não o Presidente sozinho</small></div><div class="passo"><span class="rot">3 · CONFIRMA DEPOIS</span><mark class="confunde"><em>ad referendum</em></mark> da <mark>maioria absoluta dos Deputados</mark><small>vale já · do total, não dos presentes</small></div><div class="passo"><span class="rot">4 · PARA ONDE</span>outro edifício ou ponto diverso <mark>no território nacional</mark></div></div>
+<div class="bloco tabela cor-rosa"><span class="rot">NÃO CONFUNDA — "ad referendum" com papéis invertidos</span><table><tr><th>ONDE</th><th>QUEM DECIDE</th><th>QUEM CONFIRMA DEPOIS</th></tr><tr><td><span class="cita" data-cita="ricd|1|pu">art. 1º, p. único</span></td><td><mark class="confunde">a Mesa</mark></td><td><mark class="confunde">maioria absoluta dos Deputados</mark></td></tr><tr><td><span class="cita" data-cita="ricd|15|§1">art. 15, § 1º</span></td><td><mark class="confunde">o Presidente</mark></td><td><mark class="confunde">a Mesa</mark></td></tr></table><small><span class="cita" data-cita="ricd|15|§1">art. 15, § 1º</span>: só em matéria inadiável de competência da Mesa, exceto no caso do <span class="cita" data-cita="ricd|15|XXX">inciso XXX</span> (suspensão cautelar de mandato). O <span class="cita" data-cita="ricd|17|VI|o">art. 17, VI, "o"</span>, repete essa atribuição do Presidente, remetendo ao <span class="cita" data-cita="ricd|15|§1">art. 15, § 1º</span> (antigo parágrafo único).</small></div></section><section class="painel"><h3>Mapa mental</h3><div class="mapa-rolagem"><svg viewBox="-109 -10 1251 462" font-family="Segoe UI, Arial, sans-serif" role="img" aria-label="Mapa mental: DA SEDE — ramos: Regra, Exceção, Sede, ad referendum">
+<g fill="none" stroke-linecap="round">
+<path d="M500,221 C430,221 420,51 400,51" stroke="#2f6fb3" stroke-width="5"/>
+<path d="M260,51 C250,51 250,20 245,20" stroke="#2f6fb3" stroke-width="2"/>
+<path d="M260,51 C250,51 250,78 245,78" stroke="#2f6fb3" stroke-width="2"/>
+<path d="M500,221 C430,221 420,292 400,292" stroke="#b4532a" stroke-width="5"/>
+<path d="M260,292 C250,292 250,162 245,162" stroke="#b4532a" stroke-width="2"/>
+<path d="M260,292 C250,292 250,220 245,220" stroke="#b4532a" stroke-width="2"/>
+<path d="M260,292 C250,292 250,278 245,278" stroke="#b4532a" stroke-width="2"/>
+<path d="M260,292 C250,292 250,336 245,336" stroke="#b4532a" stroke-width="2"/>
+<path d="M260,292 C250,292 250,394 245,394" stroke="#b4532a" stroke-width="2"/>
+<path d="M500,221 C570,221 580,85 600,85" stroke="#3c7a46" stroke-width="5"/>
+<path d="M746,85 C756,85 756,30 761,30" stroke="#3c7a46" stroke-width="2"/>
+<path d="M746,85 C756,85 756,112 761,112" stroke="#3c7a46" stroke-width="2"/>
+<path d="M500,221 C570,221 580,316 600,316" stroke="#a3324a" stroke-width="5"/>
+<path d="M796,316 C806,316 806,220 811,220" stroke="#a3324a" stroke-width="2"/>
+<path d="M796,316 C806,316 806,302 811,302" stroke="#a3324a" stroke-width="2"/>
+<path d="M796,316 C806,316 806,384 811,384" stroke="#a3324a" stroke-width="2"/>
+</g>
+<rect x="420" y="189" width="160" height="64" rx="32" fill="#1f2a37"/>
+<text x="500" y="218" text-anchor="middle" font-size="21" font-weight="700" fill="#fff">DA SEDE</text>
+<text x="500" y="239" text-anchor="middle" font-size="13" fill="#cfd6df">RICD, <tspan class="cita" data-cita="ricd|1">art. 1º</tspan></text>
+<rect x="260" y="31" width="140" height="40" rx="20" fill="#2f6fb3"/>
+<text x="330" y="57" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">Regra</text>
+<g font-size="21" fill="#1f2a37" text-anchor="end">
+<text x="240" y="14"><tspan font-size="16" fill="#5b6472">sede</tspan><tspan x="240" dy="24"><tspan font-weight="700" fill="#2f6fb3">Capital Federal</tspan></tspan></text>
+<text x="240" y="72"><tspan font-size="16" fill="#5b6472">funciona no</tspan><tspan x="240" dy="24"><tspan font-weight="700" fill="#2f6fb3">Palácio do Congresso Nacional</tspan></tspan></text>
+</g>
+<rect x="260" y="272" width="140" height="40" rx="20" fill="#b4532a"/>
+<text x="330" y="298" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">Exceção</text>
+<g font-size="21" fill="#1f2a37" text-anchor="end">
+<text x="240" y="156"><tspan font-size="16" fill="#5b6472">quando</tspan><tspan x="240" dy="24">motivo relevante <tspan font-weight="700" fill="#b4532a">OU</tspan> força maior</tspan></text>
+<text x="240" y="214"><tspan font-size="16" fill="#5b6472">como</tspan><tspan x="240" dy="24"><tspan font-weight="700" fill="#b4532a">poderá</tspan> (faculdade)</tspan></text>
+<text x="240" y="272"><tspan font-size="16" fill="#5b6472">quem decide</tspan><tspan x="240" dy="24"><tspan font-weight="700" fill="#b4532a">a Mesa</tspan></tspan></text>
+<text x="240" y="330"><tspan font-size="16" fill="#5b6472">confirma depois (ad referendum)</tspan><tspan x="240" dy="24"><tspan font-weight="700" fill="#b4532a">maioria absoluta dos Deputados</tspan></tspan></text>
+<text x="240" y="388"><tspan font-size="16" fill="#5b6472">para onde</tspan><tspan x="240" dy="24">outro edifício ou ponto diverso</tspan><tspan x="240" dy="24"><tspan font-weight="700" fill="#b4532a">no território nacional</tspan></tspan></text>
+</g>
+<rect x="600" y="59" width="146" height="52" rx="26" fill="#3c7a46"/>
+<text x="673" y="81" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">Sede</text>
+<text x="673" y="100" text-anchor="middle" font-size="13" fill="#fff" opacity=".9">em outros artigos</text>
+<g font-size="21" fill="#1f2a37" text-anchor="start">
+<text x="766" y="24"><tspan font-size="16" fill="#5b6472"><tspan class="cita" data-cita="ricd|4|caput">art. 4º, caput</tspan> · posse</tspan><tspan x="766" dy="24">sessão preparatória</tspan><tspan x="766" dy="24"><tspan font-weight="700" fill="#3c7a46">na sede da Câmara</tspan></tspan></text>
+<text x="766" y="106"><tspan font-size="16" fill="#5b6472"><tspan class="cita" data-cita="ricd|46|caput">art. 46, caput</tspan> · Comissões</tspan><tspan x="766" dy="24"><tspan font-weight="700" fill="#3c7a46">na sede da Câmara</tspan></tspan><tspan x="766" dy="24">salvo <tspan font-weight="700" fill="#3c7a46">CPI fora de Brasília</tspan></tspan></text>
+</g>
+<rect x="600" y="290" width="196" height="52" rx="26" fill="#a3324a"/>
+<text x="698" y="312" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">ad referendum</text>
+<text x="698" y="331" text-anchor="middle" font-size="13" fill="#fff" opacity=".9">vale já, confirma depois</text>
+<g font-size="21" fill="#1f2a37" text-anchor="start">
+<text x="816" y="214"><tspan font-size="16" fill="#5b6472"><tspan class="cita" data-cita="ricd|1|pu">art. 1º, p. único</tspan> · este capítulo</tspan><tspan x="816" dy="24"><tspan font-weight="700" fill="#a3324a">Mesa</tspan> decide,</tspan><tspan x="816" dy="24"><tspan font-weight="700" fill="#a3324a">maioria absoluta</tspan> confirma</tspan></text>
+<text x="816" y="296"><tspan font-size="16" fill="#5b6472"><tspan class="cita" data-cita="ricd|15|§1">art. 15, § 1º</tspan> · papéis invertidos</tspan><tspan x="816" dy="24"><tspan font-weight="700" fill="#a3324a">Presidente</tspan> decide,</tspan><tspan x="816" dy="24"><tspan font-weight="700" fill="#a3324a">Mesa</tspan> confirma</tspan></text>
+<text x="816" y="378"><tspan font-size="16" fill="#5b6472"><tspan class="cita" data-cita="ricd|17|VI|o">art. 17, VI, "o"</tspan></tspan><tspan x="816" dy="24">repete o art. 15; cita o</tspan><tspan x="816" dy="24">"parágrafo único" (hoje § 1º)</tspan></text>
+</g>
+</svg></div></section></div><p class="sub"><small>Conceitos (fora do texto do artigo): <em>ad referendum</em> = decide-se agora, sujeito a confirmação posterior. Maioria absoluta = mais da metade do total de membros, não dos presentes.</small></p><details class="bloco-q"><summary>Questões — certo ou errado (estilo Cebraspe)</summary><ol class="questoes"><li data-resp="errado"><p>A Câmara dos Deputados poderá reunir-se em outro edifício somente se houver, cumulativamente, motivo relevante e de força maior.</p><details class="gabarito"><summary>Gabarito</summary><p><span class="errado">Errado.</span> "motivo relevante, <strong>ou</strong> de força maior" — basta uma das causas.</p></details></li><li data-resp="certo"><p>A decisão de reunir a Câmara fora do Palácio do Congresso Nacional é tomada pela Mesa e submetida posteriormente à maioria absoluta dos Deputados.</p><details class="gabarito"><summary>Gabarito</summary><p><span class="certo">Certo.</span> Deliberação da Mesa, <em>ad referendum</em> da maioria absoluta dos Deputados.</p></details></li><li data-resp="errado"><p>Havendo força maior, o Presidente da Câmara poderá, por ato próprio, transferir as reuniões da Casa para outro ponto do território nacional.</p><details class="gabarito"><summary>Gabarito</summary><p><span class="errado">Errado.</span> Quem delibera é a <strong>Mesa</strong>, não o Presidente.</p></details></li><li data-resp="errado"><p>Para a Câmara se reunir em ponto diverso do território nacional, exige-se aprovação prévia da maioria simples dos Deputados presentes.</p><details class="gabarito"><summary>Gabarito</summary><p><span class="errado">Errado.</span> Não é aprovação prévia (é <em>ad referendum</em>) e o quórum é a <strong>maioria absoluta dos Deputados</strong>.</p></details></li><li data-resp="certo"><p>As Comissões reúnem-se na sede da Câmara, ressalvadas as convocações de CPI que se realizarem fora de Brasília.</p><details class="gabarito"><summary>Gabarito</summary><p><span class="certo">Certo.</span> <span class="cita" data-cita="ricd|46|caput">Art. 46, <em>caput</em></span>.</p></details></li><li data-resp="errado"><p>Em matéria inadiável, a Mesa pode decidir <em>ad referendum</em> do Presidente sobre assunto de competência deste.</p><details class="gabarito"><summary>Gabarito</summary><p><span class="errado">Errado.</span> É o inverso (<span class="cita" data-cita="ricd|15|§1">art. 15, § 1º</span>): o <strong>Presidente</strong> decide <em>ad referendum</em> da <strong>Mesa</strong>, sobre assunto de competência da Mesa.</p></details></li></ol></details></div></details></details></details></details>
 </main>
+<script type="application/json" id="lei">{"ricd|1": {"fonte": "Regimento Interno da Câmara dos Deputados", "trechos": ["Art. 1º A Câmara dos Deputados, com sede na Capital Federal, funciona no Palácio do Congresso Nacional.", "Parágrafo único. Havendo motivo relevante, ou de força maior, a Câmara poderá, por deliberação da Mesa, ad referendum da maioria absoluta dos Deputados, reunir-se em outro edifício ou em ponto diverso no território nacional."]}, "ricd|15|XXX": {"fonte": "Regimento Interno da Câmara dos Deputados", "trechos": ["Art. 15. À Mesa compete, dentre outras atribuições estabelecidas em lei, neste Regimento ou por resolução da Câmara, ou delas implicitamente resultantes:", "XXX - propor a suspensão cautelar do exercício do mandato parlamentar, pelo prazo previsto no inciso III do caput do art. 10 do Código de Ética e Decoro Parlamentar da Câmara dos Deputados, de Deputado Federal que seja submetido a representação por quebra de decoro parlamentar de autoria da Mesa. (Inciso acrescido pela Resolução nº 11, de 2024)"]}, "ricd|15|§1": {"fonte": "Regimento Interno da Câmara dos Deputados", "trechos": ["Art. 15. À Mesa compete, dentre outras atribuições estabelecidas em lei, neste Regimento ou por resolução da Câmara, ou delas implicitamente resultantes:", "§ 1º Em caso de matéria inadiável, poderá o Presidente, ou quem o estiver substituindo, decidir, ad referendum da Mesa, sobre assunto de competência desta, exceto no caso do inciso XXX do caput deste artigo. (Parágrafo único transformado em § 1º e com nova redação dada pela Resolução nº 11, de 2024)"]}, "ricd|17|VI|o": {"fonte": "Regimento Interno da Câmara dos Deputados", "trechos": ["Art. 17. São atribuições do Presidente, além das que estão expressas neste Regimento, ou decorram da natureza de suas funções e prerrogativas:", "VI - quanto à sua competência geral. dentre outras:", "o) deliberar, ad referendum da Mesa, nos termos do parágrafo único do art. 15;"]}, "ricd|1|caput": {"fonte": "Regimento Interno da Câmara dos Deputados", "trechos": ["Art. 1º A Câmara dos Deputados, com sede na Capital Federal, funciona no Palácio do Congresso Nacional."]}, "ricd|1|pu": {"fonte": "Regimento Interno da Câmara dos Deputados", "trechos": ["Art. 1º A Câmara dos Deputados, com sede na Capital Federal, funciona no Palácio do Congresso Nacional.", "Parágrafo único. Havendo motivo relevante, ou de força maior, a Câmara poderá, por deliberação da Mesa, ad referendum da maioria absoluta dos Deputados, reunir-se em outro edifício ou em ponto diverso no território nacional."]}, "ricd|46|caput": {"fonte": "Regimento Interno da Câmara dos Deputados", "trechos": ["Art. 46. As Comissões reunir-se-ão na sede da Câmara, em dias e horas prefixados, ordinariamente de terça a quinta-feira, a partir das nove horas, ressalvadas as convocações de Comissão Parlamentar de Inquérito que se realizarem fora de Brasília."]}, "ricd|4|caput": {"fonte": "Regimento Interno da Câmara dos Deputados", "trechos": ["Art. 4º No dia 1º de fevereiro do primeiro ano de cada legislatura, os candidatos diplomados Deputados Federais reunir-se-ão em sessão preparatória, na sede da Câmara dos Deputados. (“Caput” do artigo com redação dada pela Resolução nº 19, de 2012)"]}}</script>
 <script>
-  // busca: ignora acentos e maiúsculas; mostra só as partes que contêm o termo e as abre
+  // busca: ignora acentos e maiúsculas; mostra só as partes que contêm o termo e abre o caminho até elas
   const sem = t => t.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
   const partes = [...document.querySelectorAll("details.parte")];
+  const niveis = [...document.querySelectorAll("details.nivel")];
   const normas = [...document.querySelectorAll("details.norma")];
   const textos = new Map(partes.map(p => [p, sem(p.textContent)]));
   const saida = document.getElementById("resultado");
@@ -277,13 +226,12 @@
     partes.forEach(p => {
       const ok = !q || textos.get(p).includes(q);
       p.classList.toggle("oculto", !ok);
-      if (q && ok) { p.open = true; achadas++; }
+      if (q && ok) {
+        p.open = true; achadas++;
+        for (let a = p.parentElement.closest("details"); a; a = a.parentElement.closest("details")) a.open = true;
+      }
     });
-    normas.forEach(n => {
-      const visivel = n.querySelector("details.parte:not(.oculto)");
-      n.classList.toggle("oculto", !visivel);
-      if (q && visivel) n.open = true;
-    });
+    [...niveis, ...normas].forEach(d => d.classList.toggle("oculto", !d.querySelector("details.parte:not(.oculto)")));
     saida.textContent = q ? `${achadas} parte(s) encontrada(s)` : "";
     ajustarTextos();
   });
@@ -307,7 +255,7 @@
 
   document.querySelectorAll("[data-abrir]").forEach(b => b.addEventListener("click", () => {
     const abrir = Boolean(b.dataset.abrir);
-    [...normas, ...partes].forEach(d => { if (!d.classList.contains("oculto")) d.open = abrir; });
+    [...normas, ...niveis, ...partes].forEach(d => { if (!d.classList.contains("oculto")) d.open = abrir; });
   }));
 
   const LIMITE = 14 * parseFloat(getComputedStyle(document.body).fontSize);
@@ -335,43 +283,19 @@
   addEventListener("resize", ajustarTextos);
   ajustarTextos();
 
-  // dica com o texto da norma: artigo sozinho traz o artigo inteiro; com parágrafo/inciso/alínea, traz o caput e cada nível citado
-  const LEI = {
- "1": {
-  "caput": "Art. 1º A Câmara dos Deputados, com sede na Capital Federal, funciona no Palácio do Congresso Nacional.",
-  "pu": "Parágrafo único. Havendo motivo relevante, ou de força maior, a Câmara poderá, por deliberação da Mesa, ad referendum da maioria absoluta dos Deputados, reunir-se em outro edifício ou em ponto diverso no território nacional."
- },
- "4": {
-  "caput": "Art. 4º No dia 1º de fevereiro do primeiro ano de cada legislatura, os candidatos diplomados Deputados Federais reunir-se-ão em sessão preparatória, na sede da Câmara dos Deputados. (“Caput” do artigo com redação dada pela Resolução nº 19, de 2012)"
- },
- "15": {
-  "caput": "Art. 15. À Mesa compete, dentre outras atribuições estabelecidas em lei, neste Regimento ou por resolução da Câmara, ou delas implicitamente resultantes:",
-  "XXX": "XXX - propor a suspensão cautelar do exercício do mandato parlamentar, pelo prazo previsto no inciso III do caput do art. 10 do Código de Ética e Decoro Parlamentar da Câmara dos Deputados, de Deputado Federal que seja submetido a representação por quebra de decoro parlamentar de autoria da Mesa. (Inciso acrescido pela Resolução nº 11, de 2024)",
-  "§1": "§ 1º Em caso de matéria inadiável, poderá o Presidente, ou quem o estiver substituindo, decidir, ad referendum da Mesa, sobre assunto de competência desta, exceto no caso do inciso XXX do caput deste artigo. (Parágrafo único transformado em § 1º e com nova redação dada pela Resolução nº 11, de 2024)"
- },
- "17": {
-  "caput": "Art. 17. São atribuições do Presidente, além das que estão expressas neste Regimento, ou decorram da natureza de suas funções e prerrogativas:",
-  "VI": "VI - quanto à sua competência geral. dentre outras:",
-  "VI|o": "o) deliberar, ad referendum da Mesa, nos termos do parágrafo único do art. 15;"
- },
- "46": {
-  "caput": "Art. 46. As Comissões reunir-se-ão na sede da Câmara, em dias e horas prefixados, ordinariamente de terça a quinta-feira, a partir das nove horas, ressalvadas as convocações de Comissão Parlamentar de Inquérito que se realizarem fora de Brasília."
- }
-};
+  // dica com o texto da norma (gerada a partir do texto verificado): artigo sozinho traz o artigo inteiro;
+  // com parágrafo/inciso/alínea, traz o caput e cada nível citado
+  const LEI = JSON.parse(document.getElementById("lei").textContent);
   const dica = document.createElement("div");
   dica.id = "dica"; dica.setAttribute("role", "tooltip"); dica.hidden = true;
   document.body.append(dica);
   const esc = t => t.replace(/&/g, "&amp;").replace(/</g, "&lt;");
-  function trechos(ref) {
-    const [art, ...resto] = ref.split("|"), a = LEI[art];
-    if (!resto.length) return Object.values(a);
-    if (resto[0] === "caput") return [a.caput];
-    return [a.caput, ...resto.map((_, i) => a[resto.slice(0, i + 1).join("|")])];
-  }
   let alvo = null;
   function mostrar(el) {
+    const item = LEI[el.dataset.cita];
+    if (!item) return;
     alvo = el;
-    dica.innerHTML = '<span class="fonte">Regimento Interno da Câmara dos Deputados</span>' + trechos(el.dataset.cita).map(t => `<p>${esc(t)}</p>`).join("");
+    dica.innerHTML = `<span class="fonte">${esc(item.fonte)}</span>` + item.trechos.map(t => `<p>${esc(t)}</p>`).join("");
     dica.hidden = false;
     const r = el.getBoundingClientRect(), d = dica.getBoundingClientRect(), m = 8;
     let top = r.bottom + m;
