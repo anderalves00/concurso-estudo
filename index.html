@@ -69,8 +69,8 @@
   blockquote { margin:0; padding:10px 16px; border-left:4px solid var(--azul); background:var(--azul-f); border-radius:0 10px 10px 0; }
   blockquote p { margin:6px 0; }
   .texto-lei { position:relative; }
-  .texto-lei.recolhido { max-height:14em; overflow:hidden; }
-  .texto-lei.recolhido::after { content:""; position:absolute; left:0; right:0; bottom:0; height:3em; background:linear-gradient(transparent, var(--azul-f)); }
+  .texto-lei.recolhido { overflow:hidden; }  /* altura posta pelo JS: 4 linhas visíveis + a 5ª esmaecida */
+  .texto-lei.recolhido::after { content:""; position:absolute; left:0; right:0; bottom:0; height:var(--esmaecer, 1.75em); background:linear-gradient(transparent, var(--azul-f)); }
   .alternar-texto { margin-top:8px; }
 
   .visual { display:grid; grid-template-columns:minmax(0, 5fr) minmax(0, 6fr); gap:16px; align-items:start; }
@@ -351,12 +351,35 @@
     [...normas, ...niveis, ...partes].forEach(d => { if (!d.classList.contains("oculto")) d.open = abrir; });
   }));
 
-  const LIMITE = 14 * parseFloat(getComputedStyle(document.body).fontSize);
+  // texto da lei recolhido: 4 linhas visíveis e a 5ª esmaecida, medidas nas linhas de fato desenhadas
+  // (altura fixa não serve: o espaço entre parágrafos muda quantas linhas cabem conforme a largura)
+  const VISIVEIS = 4;
+  function linhasDesenhadas(t) {
+    const linhas = [], faixa = document.createRange();
+    const andar = document.createTreeWalker(t, NodeFilter.SHOW_TEXT);
+    for (let n = andar.nextNode(); n; n = andar.nextNode()) {
+      faixa.selectNodeContents(n);
+      for (const r of faixa.getClientRects()) {
+        if (!r.height) continue;
+        const l = linhas.find(x => Math.abs(x.top - r.top) < r.height / 2);
+        if (l) l.bottom = Math.max(l.bottom, r.bottom); else linhas.push({ top: r.top, bottom: r.bottom });
+      }
+    }
+    return linhas.sort((a, b) => a.top - b.top);
+  }
   function ajustarTextos() {
     document.querySelectorAll(".texto-lei").forEach(t => {
       if (!t.offsetParent || t.dataset.aberto) return;  // fechado (sem medida) ou expandido pelo usuário
       let b = t.nextElementSibling?.classList.contains("alternar-texto") ? t.nextElementSibling : null;
-      const longo = t.scrollHeight > LIMITE + 8;
+      const linhas = linhasDesenhadas(t);
+      const longo = linhas.length > VISIVEIS + 1;
+      if (longo) {
+        const quinta = linhas[VISIVEIS], topo = t.getBoundingClientRect().top;
+        t.style.maxHeight = Math.ceil(quinta.bottom - topo + 8) + "px";
+        t.style.setProperty("--esmaecer", Math.ceil(quinta.bottom - quinta.top + 4) + "px");
+      } else {
+        t.style.maxHeight = "";
+      }
       t.classList.toggle("recolhido", longo);
       if (longo && !b) {
         b = document.createElement("button");
@@ -364,7 +387,7 @@
         b.addEventListener("click", () => {
           const abrir = t.classList.contains("recolhido");
           t.classList.toggle("recolhido", !abrir);
-          if (abrir) t.dataset.aberto = "1"; else delete t.dataset.aberto;
+          if (abrir) { t.dataset.aberto = "1"; t.style.maxHeight = ""; } else { delete t.dataset.aberto; ajustarTextos(); }
           b.textContent = abrir ? "Recolher texto" : "Expandir texto";
         });
         t.after(b);
